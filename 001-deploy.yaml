@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: docker
+  name: docker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: docker
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: docker
+    spec:
+      volumes:
+      - name: docker-data
+        persistentVolumeClaim:
+          claimName: docker-pvc
+      containers:
+      - image: registry:2
+        name: registry
+        resources: {}
+        volumeMounts:
+        - name: docker-data
+          mountPath: /var/lib/registry
+status: {}
